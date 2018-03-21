@@ -137,6 +137,9 @@ public class Context extends ScriptContext {
     }
 
     public void pushHeapptr(long heapptr) {
+        if(heapptr == 0xffffffffffffffffl) {
+            System.out.println();
+        }
         push_heapptr(_ptr,heapptr);
     }
 
@@ -387,6 +390,14 @@ public class Context extends ScriptContext {
         return is_function(_ptr,idx);
     }
 
+    public boolean isArray(int idx) {
+        return is_array(_ptr,idx);
+    }
+
+    public int getLength(int idx) {
+        return get_length(_ptr,idx);
+    }
+
     public String getErrorString(int idx) {
         return get_error_string(_ptr,idx);
     }
@@ -435,4 +446,5 @@ public class Context extends ScriptContext {
     private final static native boolean is_object(long ptr,int idx);
     private final static native boolean is_function(long ptr,int idx);
     private final static native String get_error_string(long ptr,int idx);
+    private final static native void set_prototype(long ptr,int idx);
 }

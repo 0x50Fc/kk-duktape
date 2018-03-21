@@ -453,6 +453,13 @@ Java_cn_kkmofang_duktape_Context_get_1error_1string(JNIEnv *env, jclass type, jl
     return v;
 }
 
+
+JNIEXPORT void JNICALL
+Java_cn_kkmofang_duktape_Context_set_1prototype(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+    duk_context * ctx = (duk_context *) (long) ptr;
+    duk_set_prototype(ctx,idx);
+}
+
 // internal
 
 static void Java_cn_kkmofang_duktape_Context_fail_func (void *udata, const char *msg) {
@@ -557,13 +564,9 @@ static duk_ret_t Java_cn_kkmofang_duktape_Context_Function_func(duk_context * ct
             jmethodID call = (*env)->GetMethodID(env,func,"call","()I");
 
             if(call) {
-
                 ret = (*env)->CallIntMethod(env,v,call);
-
-                (*env)->DeleteLocalRef(env,call);
             }
 
-            (*env)->DeleteLocalRef(env,func);
         }
 
         if(isAttach) {

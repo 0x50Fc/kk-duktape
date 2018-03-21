@@ -3,6 +3,7 @@ package cn.kkmofang.duktape;
 import java.lang.ref.WeakReference;
 
 import cn.kkmofang.script.IScriptObject;
+import cn.kkmofang.script.ScriptContext;
 
 /**
  * Created by hailong11 on 2018/3/13.
@@ -32,10 +33,12 @@ public class Heapptr  {
         Context ctx = _context.get();
 
         if(ctx != null) {
+            ScriptContext.pushContext(ctx);
             ctx.pushGlobalObject();
             ctx.push(_key);
             ctx.delProp(-2);
             ctx.pop();
+            ScriptContext.popContext();
         }
 
         super.finalize();
