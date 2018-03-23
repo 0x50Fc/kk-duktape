@@ -33,12 +33,20 @@ public class Heapptr  {
         Context ctx = _context.get();
 
         if(ctx != null) {
-            ScriptContext.pushContext(ctx);
-            ctx.pushGlobalObject();
-            ctx.push(_key);
-            ctx.delProp(-2);
-            ctx.pop();
-            ScriptContext.popContext();
+
+            final String key = _key;
+
+            ctx.post(new Runnable() {
+                @Override
+                public void run() {
+                    Context ctx = (Context) ScriptContext.currentContext();
+                    ctx.pushGlobalObject();
+                    ctx.push(_key);
+                    ctx.delProp(-2);
+                    ctx.pop();
+                }
+            });
+
         }
 
         super.finalize();

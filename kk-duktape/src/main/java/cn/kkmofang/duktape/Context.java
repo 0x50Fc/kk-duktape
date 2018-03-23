@@ -1,10 +1,13 @@
 package cn.kkmofang.duktape;
 
+import android.os.Handler;
+import android.renderscript.Script;
+
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import cn.kkmofang.script.IScriptFunction;
@@ -94,8 +97,29 @@ public class Context extends ScriptContext {
         System.loadLibrary("kk-duktape");
     }
 
+    private final Handler _handler;
+
     public Context() {
         _ptr = alloc();
+        _handler = new Handler();
+    }
+
+    public void post(final Runnable runnable) {
+
+        final WeakReference<Context> v = new WeakReference<Context>(this);
+
+        _handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Context ctx = v.get();
+                if(ctx != null) {
+                    ScriptContext.pushContext(ctx);
+                    runnable.run();
+                    ScriptContext.popContext();
+                }
+
+            }
+        });
     }
 
     @Override
