@@ -343,7 +343,7 @@ Java_cn_kkmofang_duktape_Context_def_1prop(JNIEnv *env, jclass type, jlong ptr, 
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
-    duk_uint_t flags = DUK_DEFPROP_HAVE_GETTER;
+    duk_uint_t flags = DUK_DEFPROP_HAVE_GETTER | DUK_DEFPROP_SET_ENUMERABLE;
 
     Java_cn_kkmofang_duktape_Context_push_1Function(env,type,ptr,getter);
 
@@ -495,14 +495,13 @@ static duk_ret_t Java_cn_kkmofang_duktape_Context_print_func(duk_context * ctx) 
             }
         } else if(duk_is_function(ctx, - top + i)) {
             kk_log("[function]");
-        } else if(duk_is_array(ctx, - top + i)) {
-            kk_log("[array]");
-        } else if(duk_is_object(ctx, - top + i)) {
-            kk_log("[object]");
         } else if(duk_is_undefined(ctx, - top + i)) {
             kk_log("[undefined]");
         } else if(duk_is_null(ctx, - top + i)) {
             kk_log("[null]");
+        } else {
+            kk_log("%s",duk_json_encode(ctx, - top + i));
+            duk_pop(ctx);
         }
 
     }
