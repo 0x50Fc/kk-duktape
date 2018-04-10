@@ -91,9 +91,11 @@ public class Context extends ScriptContext {
         }
     };
 
-    private final long _ptr;
+    protected final long _ptr;
+    private final boolean _alloced;
 
     static {
+        System.loadLibrary("duktape");
         System.loadLibrary("kk-duktape");
     }
 
@@ -101,6 +103,13 @@ public class Context extends ScriptContext {
 
     public Context() {
         _ptr = alloc();
+        _alloced = true;
+        _handler = new Handler();
+    }
+
+    protected Context(long ptr) {
+        _ptr = ptr;
+        _alloced = false;
         _handler = new Handler();
     }
 
@@ -124,7 +133,9 @@ public class Context extends ScriptContext {
 
     @Override
     protected void finalize() throws Throwable {
-        dealloc(_ptr);
+        if(_alloced) {
+            dealloc(_ptr);
+        }
         super.finalize();
     }
 
