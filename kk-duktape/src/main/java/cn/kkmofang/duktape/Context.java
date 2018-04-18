@@ -304,9 +304,13 @@ public class Context extends ScriptContext {
         }
     }
 
+    public void push(byte[] bytes) {
+        push_bytes(_ptr,bytes);
+    }
+
     public void pushValue(Object value) {
         if(value == null) {
-            push_null(_ptr);
+            push_undefined(_ptr);
         } else if(value instanceof Integer || value instanceof Short ) {
             push_int(_ptr,((Number) value).intValue());
         } else if(value instanceof Double || value instanceof Float) {
@@ -317,6 +321,8 @@ public class Context extends ScriptContext {
             push_string(_ptr,(String) value);
         } else if(value instanceof Boolean) {
             push_boolean(_ptr, (boolean) value);
+        } else if(value instanceof byte[]) {
+            push_bytes(_ptr,(byte[]) value);
         } else if(value instanceof Iterable) {
             push_array(_ptr);
             int i = 0;
@@ -354,6 +360,8 @@ public class Context extends ScriptContext {
             }
             case DUK_TYPE_STRING:
                 return to_string(_ptr,idx);
+            case DUK_TYPE_BUFFER:
+                return to_bytes(_ptr,idx);
             case DUK_TYPE_LIGHTFUNC:
             case DUK_TYPE_OBJECT:
                 if(is_array(_ptr,idx)) {
@@ -405,6 +413,10 @@ public class Context extends ScriptContext {
         return to_Object(_ptr,idx);
     }
 
+    public byte[] toBytes(int idx) {
+        return to_bytes(_ptr,idx);
+    }
+
     public boolean isString(int idx) {
         return is_string(_ptr,idx);
     }
@@ -429,6 +441,10 @@ public class Context extends ScriptContext {
         return is_array(_ptr,idx);
     }
 
+    public boolean isBytes(int idx) {
+        return is_bytes(_ptr,idx);
+    }
+
     public int getLength(int idx) {
         return get_length(_ptr,idx);
     }
@@ -449,6 +465,7 @@ public class Context extends ScriptContext {
     private final static native void push_undefined(long ptr);
     private final static native void push_heapptr(long ptr, long heapptr);
     private final static native void push_enum(long ptr, int idx);
+    private final static native void push_bytes(long ptr, byte[] bytes);
     private final static native int get_top(long ptr);
     private final static native void pop(long ptr, int count);
     private final static native int pcall(long ptr, int n);
@@ -464,6 +481,7 @@ public class Context extends ScriptContext {
     private final static native boolean to_boolean(long ptr, int idx);
     private final static native double to_number(long ptr, int idx);
     private final static native Object to_Object(long ptr, int idx);
+    private final static native byte[] to_bytes(long ptr,int idx);
     private final static native long get_heapptr(long ptr, int idx);
     private final static native void dup(long ptr, int idx);
     private final static native boolean next(long ptr, int idx, boolean hasValue);
@@ -480,6 +498,7 @@ public class Context extends ScriptContext {
     private final static native boolean is_boolean(long ptr,int idx);
     private final static native boolean is_object(long ptr,int idx);
     private final static native boolean is_function(long ptr,int idx);
+    private final static native boolean is_bytes(long ptr, int idx);
     private final static native String get_error_string(long ptr,int idx);
     private final static native void set_prototype(long ptr,int idx);
 }

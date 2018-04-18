@@ -460,6 +460,55 @@ Java_cn_kkmofang_duktape_Context_set_1prototype(JNIEnv *env, jclass type, jlong 
     duk_set_prototype(ctx,idx);
 }
 
+
+JNIEXPORT void JNICALL
+Java_cn_kkmofang_duktape_Context_push_1bytes(JNIEnv *env, jclass type, jlong ptr,
+                                             jbyteArray bytes_) {
+
+    duk_context * ctx = (duk_context *) (long) ptr;
+    jbyte *bytes = (*env)->GetByteArrayElements(env, bytes_, NULL);
+    jsize length = (*env)->GetArrayLength(env,bytes_);
+
+    void * d = duk_push_fixed_buffer(ctx, length);
+
+    memcpy(d, bytes, length);
+
+    duk_push_buffer_object(ctx, -1, 0, length, DUK_BUFOBJ_UINT8ARRAY);
+
+    duk_remove(ctx, -2);
+
+    (*env)->ReleaseByteArrayElements(env, bytes_, bytes, 0);
+}
+
+
+JNIEXPORT jbyteArray JNICALL
+Java_cn_kkmofang_duktape_Context_to_1bytes(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+
+    duk_context * ctx = (duk_context *) (long) ptr;
+
+    if(duk_is_buffer_data(ctx, idx)) {
+
+        duk_size_t n;
+        void * bytes = duk_get_buffer_data(ctx, idx, &n);
+
+        jbyteArray r = (*env)->NewByteArray(env,(jsize) n);
+
+        (*env)->SetByteArrayRegion(env,r,0,n,bytes);
+
+        return r;
+    }
+
+    return NULL;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_cn_kkmofang_duktape_Context_is_1bytes(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+
+    duk_context * ctx = (duk_context *) (long) ptr;
+
+    return duk_is_buffer_data(ctx,idx) ? 1: 0 ;
+}
+
 // internal
 
 static void Java_cn_kkmofang_duktape_Context_fail_func (void *udata, const char *msg) {
