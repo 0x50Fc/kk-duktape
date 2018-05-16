@@ -210,6 +210,10 @@ public class Context extends ScriptContext {
         eval(_ptr,string);
     }
 
+    public void compile(String string,String name) {
+        compile(_ptr,string,name);
+    }
+
     public void pushGlobalObject() {
         push_global_object(_ptr);
     }
@@ -450,6 +454,7 @@ public class Context extends ScriptContext {
     }
 
     public String getErrorString(int idx) {
+
         return get_error_string(_ptr,idx);
     }
 
@@ -472,6 +477,7 @@ public class Context extends ScriptContext {
     private final static native int pcall_method(long ptr, int n);
     private final static native int get_type(long ptr,int idx);
     private final static native void eval(long ptr, String string);
+    private final static native void compile(long ptr, String string,String name);
     private final static native void push_Object(long ptr, Object object);
     private final static native void push_global_object(long ptr);
     private final static native void push_Function(long ptr, IScriptFunction func);

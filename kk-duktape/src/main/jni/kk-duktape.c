@@ -509,6 +509,30 @@ Java_cn_kkmofang_duktape_Context_is_1bytes(JNIEnv *env, jclass type, jlong ptr, 
     return duk_is_buffer_data(ctx,idx) ? 1: 0 ;
 }
 
+
+JNIEXPORT void JNICALL
+Java_cn_kkmofang_duktape_Context_compile__JLjava_lang_String_2Ljava_lang_String_2(JNIEnv *env,
+                                                                                  jclass type,
+                                                                                  jlong ptr,
+                                                                                  jstring string_,
+                                                                                  jstring name_) {
+    const char *string = (*env)->GetStringUTFChars(env, string_, 0);
+    const char *name = (*env)->GetStringUTFChars(env, name_, 0);
+
+    duk_context * ctx = (duk_context *) (long) ptr;
+
+    if(string && name) {
+
+        duk_push_string(ctx, name);
+        duk_compile_string_filename(ctx, 0, string);
+
+    }
+
+
+    (*env)->ReleaseStringUTFChars(env, string_, string);
+    (*env)->ReleaseStringUTFChars(env, name_, name);
+}
+
 // internal
 
 static void Java_cn_kkmofang_duktape_Context_fail_func (void *udata, const char *msg) {
