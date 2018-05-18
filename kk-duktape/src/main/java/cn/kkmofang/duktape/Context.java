@@ -305,6 +305,11 @@ public class Context extends ScriptContext {
             }
         } else {
             push_Object(_ptr,object);
+            String[] keys = ScriptContext.keys(object);
+            for(String key : keys) {
+                push_string(_ptr, key);
+                def_prop(_ptr, -2, Getter, Setter);
+            }
         }
     }
 
