@@ -341,15 +341,27 @@ public class Context extends ScriptContext {
                 put_prop(_ptr, -3);
                 i++;
             }
-        } else if(value.getClass().isArray()){
+        } else if(value.getClass().isArray()) {
             push_array(_ptr);
             int n = Array.getLength(value);
-            for(int i=0;i<n;i++) {
-                Object v = Array.get(value,i);
-                push_int(_ptr,i);
+            for (int i = 0; i < n; i++) {
+                Object v = Array.get(value, i);
+                push_int(_ptr, i);
                 pushValue(v);
+                put_prop(_ptr, -3);
+            }
+        } else if(value instanceof Map) {
+
+            push_object(_ptr);
+
+            Map m = (Map) value;
+
+            for(Object key : m.keySet()) {
+                push_string(_ptr,stringValue(key,""));
+                pushValue(m.get(key));
                 put_prop(_ptr,-3);
             }
+
         } else {
             pushObject(value);
         }
