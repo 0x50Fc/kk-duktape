@@ -5,6 +5,7 @@ import android.renderscript.Script;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import cn.kkmofang.script.ScriptContext;
 
 public class Context extends ScriptContext {
 
+    public static final Charset UTF8 = Charset.forName("UTF-8");
 
     public static final int DUK_TYPE_MIN = 0;
     public static final int DUK_TYPE_NONE = 0;
@@ -223,7 +225,11 @@ public class Context extends ScriptContext {
     }
 
     public String toString(int idx) {
-        return to_string(_ptr,idx);
+        byte[] data = to_string(_ptr,idx);
+        if(data == null) {
+            return null;
+        }
+        return new String(data,UTF8);
     }
 
     public boolean toBoolean(int idx) {
@@ -410,7 +416,7 @@ public class Context extends ScriptContext {
 
                             while(next(_ptr,-1,true)) {
 
-                                String key = to_string(_ptr,-2);
+                                String key = toString(-2);
                                 Object vv = toValue(-1);
 
                                 if(vv != null && key != null) {
@@ -472,7 +478,13 @@ public class Context extends ScriptContext {
 
     public String getErrorString(int idx) {
 
-        return get_error_string(_ptr,idx);
+        byte[] data = get_error_string(_ptr,idx);
+
+        if(data == null) {
+            return null;
+        }
+
+        return new String(data,UTF8);
     }
 
     private native static final long alloc();
@@ -499,7 +511,7 @@ public class Context extends ScriptContext {
     private final static native void push_global_object(long ptr);
     private final static native void push_Function(long ptr, IScriptFunction func);
     private final static native void gc(long ptr);
-    private final static native String to_string(long ptr,int idx);
+    private final static native byte[] to_string(long ptr,int idx);
     private final static native int to_int(long ptr, int idx);
     private final static native boolean to_boolean(long ptr, int idx);
     private final static native double to_number(long ptr, int idx);
@@ -522,6 +534,6 @@ public class Context extends ScriptContext {
     private final static native boolean is_object(long ptr,int idx);
     private final static native boolean is_function(long ptr,int idx);
     private final static native boolean is_bytes(long ptr, int idx);
-    private final static native String get_error_string(long ptr,int idx);
+    private final static native byte[] get_error_string(long ptr,int idx);
     private final static native void set_prototype(long ptr,int idx);
 }

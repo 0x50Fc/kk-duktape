@@ -176,14 +176,24 @@ Java_cn_kkmofang_duktape_Context_gc(JNIEnv *env, jclass type, jlong ptr) {
     duk_gc(ctx,DUK_GC_COMPACT);
 }
 
-JNIEXPORT jstring JNICALL
+JNIEXPORT jbyteArray JNICALL
 Java_cn_kkmofang_duktape_Context_to_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
-    const char * v = duk_to_string(ctx,idx);
+    size_t n;
+    const char * v = duk_to_lstring(ctx,idx,&n);
 
-    return (*env)->NewStringUTF(env, v);
+    if(v && n > 0) {
+
+        jbyteArray array = (*env)->NewByteArray(env,n);
+
+        (*env)->SetByteArrayRegion(env,array, 0, n, (jbyte*)v);
+
+        return array;
+    }
+
+    return NULL;
 }
 
 JNIEXPORT jint JNICALL
@@ -427,11 +437,11 @@ Java_cn_kkmofang_duktape_Context_is_1function(JNIEnv *env, jclass type, jlong pt
 }
 
 
-JNIEXPORT jstring JNICALL
+JNIEXPORT jbyteArray JNICALL
 Java_cn_kkmofang_duktape_Context_get_1error_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
-    jstring v = NULL;
+    jbyteArray v = NULL;
 
     if(duk_is_error(ctx, idx)) {
         duk_get_prop_string(ctx, idx, "lineNumber");
@@ -444,10 +454,20 @@ Java_cn_kkmofang_duktape_Context_get_1error_1string(JNIEnv *env, jclass type, jl
         const char * fileName = duk_to_string(ctx, -1);
         duk_pop(ctx);
         duk_push_sprintf(ctx,"%s(%d): %s",fileName,lineNumber,error);
-        v = (*env)->NewStringUTF(env, duk_to_string(ctx,-1));
+        size_t n;
+        const char * vv = duk_to_lstring(ctx,-1,&n);
+        if(vv && n >0) {
+            v = (*env)->NewByteArray(env,n);
+            (*env)->SetByteArrayRegion(env,v, 0, n, (jbyte*)vv);
+        }
         duk_pop(ctx);
     } else {
-        v = (*env)->NewStringUTF(env, duk_to_string(ctx,idx));
+        size_t n;
+        const char * vv = duk_to_lstring(ctx,idx,&n);
+        if(vv && n >0) {
+            v = (*env)->NewByteArray(env,n);
+            (*env)->SetByteArrayRegion(env,v, 0, n, (jbyte*)vv);
+        }
     }
 
     return v;
