@@ -386,7 +386,7 @@ public class Context extends ScriptContext {
                 return v;
             }
             case DUK_TYPE_STRING:
-                return to_string(_ptr,idx);
+                return toString(idx);
             case DUK_TYPE_BUFFER:
                 return to_bytes(_ptr,idx);
             case DUK_TYPE_LIGHTFUNC:
