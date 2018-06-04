@@ -227,7 +227,7 @@ public class Context extends ScriptContext {
     public String toString(int idx) {
         byte[] data = to_string(_ptr,idx);
         if(data == null) {
-            return null;
+            return "";
         }
         return new String(data,UTF8);
     }
