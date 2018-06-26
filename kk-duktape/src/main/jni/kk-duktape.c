@@ -2,17 +2,17 @@
 #include "kk.h"
 #include "duktape/src/duktape.h"
 
-static void Java_cn_kkmofang_duktape_Context_fail_func (void *udata, const char *msg);
-static duk_ret_t Java_cn_kkmofang_duktape_Context_print_func(duk_context * ctx);
+static void Java_cn_kkmofang_duktape_BasicContext_fail_func (void *udata, const char *msg);
+static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_print_func(duk_context * ctx);
 
 JNIEXPORT jlong JNICALL
 Java_cn_kkmofang_duktape_Context_alloc(JNIEnv *env, jclass type) {
 
-    duk_context * ctx = duk_create_heap(NULL, NULL, NULL, NULL, Java_cn_kkmofang_duktape_Context_fail_func);
+    duk_context * ctx = duk_create_heap(NULL, NULL, NULL, NULL, Java_cn_kkmofang_duktape_BasicContext_fail_func);
 
     duk_push_global_object(ctx);
 
-    duk_push_c_function(ctx,Java_cn_kkmofang_duktape_Context_print_func,DUK_VARARGS);
+    duk_push_c_function(ctx,Java_cn_kkmofang_duktape_BasicContext_print_func,DUK_VARARGS);
     duk_put_prop_string(ctx,-2,"print");
 
     duk_push_object(ctx);
@@ -29,14 +29,14 @@ Java_cn_kkmofang_duktape_Context_dealloc(JNIEnv *env, jclass type, jlong ptr) {
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1object(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1object(JNIEnv *env, jclass type, jlong ptr) {
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_push_object(ctx);
 }
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1array(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1array(JNIEnv *env, jclass type, jlong ptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_push_array(ctx);
@@ -44,7 +44,7 @@ Java_cn_kkmofang_duktape_Context_push_1array(JNIEnv *env, jclass type, jlong ptr
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1string(JNIEnv *env, jclass type, jlong ptr, jstring value_) {
+Java_cn_kkmofang_duktape_BasicContext_push_1string(JNIEnv *env, jclass type, jlong ptr, jstring value_) {
     const char *value = (*env)->GetStringUTFChars(env, value_, 0);
 
     duk_context * ctx = (duk_context *) (long) ptr;
@@ -54,7 +54,7 @@ Java_cn_kkmofang_duktape_Context_push_1string(JNIEnv *env, jclass type, jlong pt
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1int(JNIEnv *env, jclass type, jlong ptr, jint value) {
+Java_cn_kkmofang_duktape_BasicContext_push_1int(JNIEnv *env, jclass type, jlong ptr, jint value) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_push_int(ctx,value);
@@ -62,7 +62,7 @@ Java_cn_kkmofang_duktape_Context_push_1int(JNIEnv *env, jclass type, jlong ptr, 
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1boolean(JNIEnv *env, jclass type, jlong ptr,
+Java_cn_kkmofang_duktape_BasicContext_push_1boolean(JNIEnv *env, jclass type, jlong ptr,
                                                jboolean value) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
@@ -71,7 +71,7 @@ Java_cn_kkmofang_duktape_Context_push_1boolean(JNIEnv *env, jclass type, jlong p
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1number(JNIEnv *env, jclass type, jlong ptr, jdouble value) {
+Java_cn_kkmofang_duktape_BasicContext_push_1number(JNIEnv *env, jclass type, jlong ptr, jdouble value) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_push_number(ctx,value);
@@ -79,13 +79,13 @@ Java_cn_kkmofang_duktape_Context_push_1number(JNIEnv *env, jclass type, jlong pt
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1null(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1null(JNIEnv *env, jclass type, jlong ptr) {
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_push_null(ctx);
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1undefined(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1undefined(JNIEnv *env, jclass type, jlong ptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_push_undefined(ctx);
@@ -93,7 +93,7 @@ Java_cn_kkmofang_duktape_Context_push_1undefined(JNIEnv *env, jclass type, jlong
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1heapptr(JNIEnv *env, jclass type, jlong ptr, jlong heapptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1heapptr(JNIEnv *env, jclass type, jlong ptr, jlong heapptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_push_heapptr(ctx,(void *)(long) heapptr);
@@ -101,7 +101,7 @@ Java_cn_kkmofang_duktape_Context_push_1heapptr(JNIEnv *env, jclass type, jlong p
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1enum(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_push_1enum(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_enum(ctx,idx,DUK_ENUM_INCLUDE_SYMBOLS);
@@ -109,7 +109,7 @@ Java_cn_kkmofang_duktape_Context_push_1enum(JNIEnv *env, jclass type, jlong ptr,
 }
 
 JNIEXPORT jint JNICALL
-Java_cn_kkmofang_duktape_Context_get_1top(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_get_1top(JNIEnv *env, jclass type, jlong ptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_get_top(ctx);
@@ -117,7 +117,7 @@ Java_cn_kkmofang_duktape_Context_get_1top(JNIEnv *env, jclass type, jlong ptr) {
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_pop(JNIEnv *env, jclass type, jlong ptr, jint count) {
+Java_cn_kkmofang_duktape_BasicContext_pop(JNIEnv *env, jclass type, jlong ptr, jint count) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -126,7 +126,7 @@ Java_cn_kkmofang_duktape_Context_pop(JNIEnv *env, jclass type, jlong ptr, jint c
 }
 
 JNIEXPORT jint JNICALL
-Java_cn_kkmofang_duktape_Context_pcall(JNIEnv *env, jclass type, jlong ptr, jint n) {
+Java_cn_kkmofang_duktape_BasicContext_pcall(JNIEnv *env, jclass type, jlong ptr, jint n) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_pcall(ctx,n);
@@ -134,7 +134,7 @@ Java_cn_kkmofang_duktape_Context_pcall(JNIEnv *env, jclass type, jlong ptr, jint
 }
 
 JNIEXPORT jint JNICALL
-Java_cn_kkmofang_duktape_Context_pcall_1method(JNIEnv *env, jclass type, jlong ptr, jint n) {
+Java_cn_kkmofang_duktape_BasicContext_pcall_1method(JNIEnv *env, jclass type, jlong ptr, jint n) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_pcall_method(ctx,n);
@@ -142,7 +142,7 @@ Java_cn_kkmofang_duktape_Context_pcall_1method(JNIEnv *env, jclass type, jlong p
 }
 
 JNIEXPORT jint JNICALL
-Java_cn_kkmofang_duktape_Context_get_1type(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_get_1type(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_get_type(ctx,idx);
@@ -150,7 +150,7 @@ Java_cn_kkmofang_duktape_Context_get_1type(JNIEnv *env, jclass type, jlong ptr, 
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_eval(JNIEnv *env, jclass type, jlong ptr, jstring string_) {
+Java_cn_kkmofang_duktape_BasicContext_eval(JNIEnv *env, jclass type, jlong ptr, jstring string_) {
     const char *string = (*env)->GetStringUTFChars(env, string_, 0);
 
     duk_context * ctx = (duk_context *) (long) ptr;
@@ -161,7 +161,7 @@ Java_cn_kkmofang_duktape_Context_eval(JNIEnv *env, jclass type, jlong ptr, jstri
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1global_1object(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1global_1object(JNIEnv *env, jclass type, jlong ptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -170,14 +170,14 @@ Java_cn_kkmofang_duktape_Context_push_1global_1object(JNIEnv *env, jclass type, 
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_gc(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_gc(JNIEnv *env, jclass type, jlong ptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_gc(ctx,DUK_GC_COMPACT);
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_cn_kkmofang_duktape_Context_to_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_to_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -197,7 +197,7 @@ Java_cn_kkmofang_duktape_Context_to_1string(JNIEnv *env, jclass type, jlong ptr,
 }
 
 JNIEXPORT jint JNICALL
-Java_cn_kkmofang_duktape_Context_to_1int(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_to_1int(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -206,7 +206,7 @@ Java_cn_kkmofang_duktape_Context_to_1int(JNIEnv *env, jclass type, jlong ptr, ji
 }
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_to_1boolean(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_to_1boolean(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -215,7 +215,7 @@ Java_cn_kkmofang_duktape_Context_to_1boolean(JNIEnv *env, jclass type, jlong ptr
 }
 
 JNIEXPORT jdouble JNICALL
-Java_cn_kkmofang_duktape_Context_to_1number(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_to_1number(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -224,7 +224,7 @@ Java_cn_kkmofang_duktape_Context_to_1number(JNIEnv *env, jclass type, jlong ptr,
 }
 
 JNIEXPORT jlong JNICALL
-Java_cn_kkmofang_duktape_Context_get_1heapptr(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_get_1heapptr(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -233,7 +233,7 @@ Java_cn_kkmofang_duktape_Context_get_1heapptr(JNIEnv *env, jclass type, jlong pt
 }
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_dup(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_dup(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -242,7 +242,7 @@ Java_cn_kkmofang_duktape_Context_dup(JNIEnv *env, jclass type, jlong ptr, jint i
 }
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_next(JNIEnv *env, jclass type, jlong ptr, jint idx,
+Java_cn_kkmofang_duktape_BasicContext_next(JNIEnv *env, jclass type, jlong ptr, jint idx,
                                       jboolean hasValue) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
@@ -251,10 +251,10 @@ Java_cn_kkmofang_duktape_Context_next(JNIEnv *env, jclass type, jlong ptr, jint 
 
 }
 
-static duk_ret_t Java_cn_kkmofang_duktape_Context_Object_dealloc_func(duk_context * ctx);
+static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_Object_dealloc_func(duk_context * ctx);
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1Object(JNIEnv *env, jclass type, jlong ptr, jobject object) {
+Java_cn_kkmofang_duktape_BasicContext_push_1Object(JNIEnv *env, jclass type, jlong ptr, jobject object) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -264,33 +264,33 @@ Java_cn_kkmofang_duktape_Context_push_1Object(JNIEnv *env, jclass type, jlong pt
         duk_push_object(ctx);
         duk_push_pointer(ctx, (*env)->NewGlobalRef(env,object));
         duk_put_prop_string(ctx,-2,"__object");
-        duk_push_c_function(ctx,Java_cn_kkmofang_duktape_Context_Object_dealloc_func,1);
+        duk_push_c_function(ctx,Java_cn_kkmofang_duktape_BasicContext_Object_dealloc_func,1);
         duk_set_finalizer(ctx,-2);
     }
 
 }
 
-static duk_ret_t Java_cn_kkmofang_duktape_Context_Function_func(duk_context * ctx);
+static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_Function_func(duk_context * ctx);
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1Function(JNIEnv *env, jclass type, jlong ptr, jobject func) {
+Java_cn_kkmofang_duktape_BasicContext_push_1Function(JNIEnv *env, jclass type, jlong ptr, jobject func) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
     if(func == NULL) {
         duk_push_null(ctx);
     } else {
-        duk_push_c_function(ctx,Java_cn_kkmofang_duktape_Context_Function_func,DUK_VARARGS);
+        duk_push_c_function(ctx,Java_cn_kkmofang_duktape_BasicContext_Function_func,DUK_VARARGS);
         duk_push_pointer(ctx, (*env)->NewGlobalRef(env,func));
         duk_put_prop_string(ctx,-2,"__object");
-        duk_push_c_function(ctx,Java_cn_kkmofang_duktape_Context_Object_dealloc_func,1);
+        duk_push_c_function(ctx,Java_cn_kkmofang_duktape_BasicContext_Object_dealloc_func,1);
         duk_set_finalizer(ctx,-2);
     }
 
 }
 
 JNIEXPORT jobject JNICALL
-Java_cn_kkmofang_duktape_Context_to_1Object(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_to_1Object(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -309,7 +309,7 @@ Java_cn_kkmofang_duktape_Context_to_1Object(JNIEnv *env, jclass type, jlong ptr,
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1this(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1this(JNIEnv *env, jclass type, jlong ptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -319,7 +319,7 @@ Java_cn_kkmofang_duktape_Context_push_1this(JNIEnv *env, jclass type, jlong ptr)
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_get_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_get_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_get_prop(ctx,idx);
@@ -328,7 +328,7 @@ Java_cn_kkmofang_duktape_Context_get_1prop(JNIEnv *env, jclass type, jlong ptr, 
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_put_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_put_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -338,7 +338,7 @@ Java_cn_kkmofang_duktape_Context_put_1prop(JNIEnv *env, jclass type, jlong ptr, 
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_del_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_del_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -348,19 +348,19 @@ Java_cn_kkmofang_duktape_Context_del_1prop(JNIEnv *env, jclass type, jlong ptr, 
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_def_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx,
+Java_cn_kkmofang_duktape_BasicContext_def_1prop(JNIEnv *env, jclass type, jlong ptr, jint idx,
                                            jobject getter, jobject setter) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
     duk_uint_t flags = DUK_DEFPROP_HAVE_GETTER | DUK_DEFPROP_SET_ENUMERABLE;
 
-    Java_cn_kkmofang_duktape_Context_push_1Function(env,type,ptr,getter);
+    Java_cn_kkmofang_duktape_BasicContext_push_1Function(env,type,ptr,getter);
 
     idx --;
 
     if(setter) {
-        Java_cn_kkmofang_duktape_Context_push_1Function(env,type,ptr,setter);
+        Java_cn_kkmofang_duktape_BasicContext_push_1Function(env,type,ptr,setter);
         idx --;
         flags = flags | DUK_DEFPROP_HAVE_SETTER;
     }
@@ -371,7 +371,7 @@ Java_cn_kkmofang_duktape_Context_def_1prop(JNIEnv *env, jclass type, jlong ptr, 
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1curr_1func(JNIEnv *env, jclass type, jlong ptr) {
+Java_cn_kkmofang_duktape_BasicContext_push_1curr_1func(JNIEnv *env, jclass type, jlong ptr) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -381,14 +381,14 @@ Java_cn_kkmofang_duktape_Context_push_1curr_1func(JNIEnv *env, jclass type, jlon
 
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_is_1array(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_is_1array(JNIEnv *env, jclass type, jlong ptr, jint idx) {
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_is_array(ctx,idx);
 }
 
 
 JNIEXPORT jint JNICALL
-Java_cn_kkmofang_duktape_Context_get_1length(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_get_1length(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_get_length(ctx,idx);
@@ -397,7 +397,7 @@ Java_cn_kkmofang_duktape_Context_get_1length(JNIEnv *env, jclass type, jlong ptr
 
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_is_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_is_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_is_string(ctx,idx);
@@ -405,7 +405,7 @@ Java_cn_kkmofang_duktape_Context_is_1string(JNIEnv *env, jclass type, jlong ptr,
 }
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_is_1number(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_is_1number(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_is_number(ctx,idx);
@@ -413,7 +413,7 @@ Java_cn_kkmofang_duktape_Context_is_1number(JNIEnv *env, jclass type, jlong ptr,
 }
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_is_1boolean(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_is_1boolean(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_is_boolean(ctx,idx);
@@ -421,7 +421,7 @@ Java_cn_kkmofang_duktape_Context_is_1boolean(JNIEnv *env, jclass type, jlong ptr
 }
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_is_1object(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_is_1object(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_is_object(ctx,idx);
@@ -429,7 +429,7 @@ Java_cn_kkmofang_duktape_Context_is_1object(JNIEnv *env, jclass type, jlong ptr,
 }
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_is_1function(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_is_1function(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     return duk_is_function(ctx,idx);
@@ -438,7 +438,7 @@ Java_cn_kkmofang_duktape_Context_is_1function(JNIEnv *env, jclass type, jlong pt
 
 
 JNIEXPORT jbyteArray JNICALL
-Java_cn_kkmofang_duktape_Context_get_1error_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_get_1error_1string(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
     jbyteArray v = NULL;
@@ -475,14 +475,14 @@ Java_cn_kkmofang_duktape_Context_get_1error_1string(JNIEnv *env, jclass type, jl
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_set_1prototype(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_set_1prototype(JNIEnv *env, jclass type, jlong ptr, jint idx) {
     duk_context * ctx = (duk_context *) (long) ptr;
     duk_set_prototype(ctx,idx);
 }
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_push_1bytes(JNIEnv *env, jclass type, jlong ptr,
+Java_cn_kkmofang_duktape_BasicContext_push_1bytes(JNIEnv *env, jclass type, jlong ptr,
                                              jbyteArray bytes_) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
@@ -502,7 +502,7 @@ Java_cn_kkmofang_duktape_Context_push_1bytes(JNIEnv *env, jclass type, jlong ptr
 
 
 JNIEXPORT jbyteArray JNICALL
-Java_cn_kkmofang_duktape_Context_to_1bytes(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_to_1bytes(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -522,7 +522,7 @@ Java_cn_kkmofang_duktape_Context_to_1bytes(JNIEnv *env, jclass type, jlong ptr, 
 }
 
 JNIEXPORT jboolean JNICALL
-Java_cn_kkmofang_duktape_Context_is_1bytes(JNIEnv *env, jclass type, jlong ptr, jint idx) {
+Java_cn_kkmofang_duktape_BasicContext_is_1bytes(JNIEnv *env, jclass type, jlong ptr, jint idx) {
 
     duk_context * ctx = (duk_context *) (long) ptr;
 
@@ -531,7 +531,7 @@ Java_cn_kkmofang_duktape_Context_is_1bytes(JNIEnv *env, jclass type, jlong ptr, 
 
 
 JNIEXPORT void JNICALL
-Java_cn_kkmofang_duktape_Context_compile__JLjava_lang_String_2Ljava_lang_String_2(JNIEnv *env,
+Java_cn_kkmofang_duktape_BasicContext_compile__JLjava_lang_String_2Ljava_lang_String_2(JNIEnv *env,
                                                                                   jclass type,
                                                                                   jlong ptr,
                                                                                   jstring string_,
@@ -555,11 +555,11 @@ Java_cn_kkmofang_duktape_Context_compile__JLjava_lang_String_2Ljava_lang_String_
 
 // internal
 
-static void Java_cn_kkmofang_duktape_Context_fail_func (void *udata, const char *msg) {
+static void Java_cn_kkmofang_duktape_BasicContext_fail_func (void *udata, const char *msg) {
     kk_log("%s",msg);
 }
 
-static duk_ret_t Java_cn_kkmofang_duktape_Context_print_func(duk_context * ctx) {
+static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_print_func(duk_context * ctx) {
 
     int top = duk_get_top(ctx);
 
@@ -602,7 +602,7 @@ static duk_ret_t Java_cn_kkmofang_duktape_Context_print_func(duk_context * ctx) 
     return 0;
 }
 
-static duk_ret_t Java_cn_kkmofang_duktape_Context_Object_dealloc_func(duk_context * ctx) {
+static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_Object_dealloc_func(duk_context * ctx) {
 
     duk_get_prop_string(ctx,-1,"__object");
 
@@ -627,7 +627,7 @@ static duk_ret_t Java_cn_kkmofang_duktape_Context_Object_dealloc_func(duk_contex
     return 0;
 }
 
-static duk_ret_t Java_cn_kkmofang_duktape_Context_Function_func(duk_context * ctx) {
+static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_Function_func(duk_context * ctx) {
 
     duk_ret_t ret = 0;
     jobject v = NULL;
