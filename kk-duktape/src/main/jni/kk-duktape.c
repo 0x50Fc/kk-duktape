@@ -299,7 +299,7 @@ Java_cn_kkmofang_duktape_BasicContext_to_1Object(JNIEnv *env, jclass type, jlong
     if(duk_is_object(ctx, idx)) {
         duk_get_prop_string(ctx,idx,"__object");
         if(duk_is_pointer(ctx,-1)) {
-            v = (*env)->NewLocalRef(env,(jobject) duk_to_pointer(ctx,-1));
+            v = (jobject) duk_to_pointer(ctx,-1);
         }
         duk_pop(ctx);
     }
@@ -668,3 +668,4 @@ static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_Function_func(duk_context
 
     return ret;
 }
+

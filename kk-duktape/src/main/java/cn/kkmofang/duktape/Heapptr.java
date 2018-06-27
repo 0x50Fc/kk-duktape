@@ -1,8 +1,6 @@
 package cn.kkmofang.duktape;
 
 import java.lang.ref.WeakReference;
-
-import cn.kkmofang.script.IScriptObject;
 import cn.kkmofang.script.ScriptContext;
 
 /**
@@ -11,12 +9,12 @@ import cn.kkmofang.script.ScriptContext;
 
 public class Heapptr  {
 
-    private final WeakReference<Context> _context;
+    private final WeakReference<BasicContext> _context;
     private final long _heapptr;
     private final String _key;
 
-    public Heapptr(Context context,long heapptr) {
-        _context = new WeakReference<Context>(context);
+    public Heapptr(BasicContext context,long heapptr) {
+        _context = new WeakReference<>(context);
         _heapptr = heapptr;
         _key = "0x" + Long.toHexString(heapptr);
 
@@ -30,7 +28,7 @@ public class Heapptr  {
     @Override
     protected void finalize() throws Throwable {
 
-        Context ctx = _context.get();
+        BasicContext ctx = _context.get();
 
         if(ctx != null) {
 
@@ -39,7 +37,7 @@ public class Heapptr  {
             ctx.post(new Runnable() {
                 @Override
                 public void run() {
-                    Context ctx = (Context) ScriptContext.currentContext();
+                    BasicContext ctx = (Context) ScriptContext.currentContext();
                     ctx.pushGlobalObject();
                     ctx.push(_key);
                     ctx.delProp(-2);
@@ -52,7 +50,7 @@ public class Heapptr  {
         super.finalize();
     }
 
-    public Context context() {
+    public BasicContext context() {
         return _context.get();
     }
 

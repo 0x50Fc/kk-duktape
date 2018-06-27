@@ -1,8 +1,5 @@
 package cn.kkmofang.duktape;
 
-import android.os.Handler;
-
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
@@ -18,7 +15,7 @@ import cn.kkmofang.script.ScriptContext;
  * Created by hailong11 on 2018/6/26.
  */
 
-public class BasicContext extends ScriptContext {
+public abstract class BasicContext extends ScriptContext {
 
     public static final Charset UTF8 = Charset.forName("UTF-8");
 
@@ -38,11 +35,13 @@ public class BasicContext extends ScriptContext {
     public static final int DUK_EXEC_SUCCESS = 0;
     public static final int DUK_EXEC_ERROR = 1;
 
+    public abstract void post(Runnable run);
+
     public static final IScriptFunction Getter = new IScriptFunction() {
         @Override
         public int call() {
 
-            Context ctx = (Context) Context.currentContext();
+            BasicContext ctx = (BasicContext) Context.currentContext();
 
             ctx.pushThis();
 
@@ -69,7 +68,7 @@ public class BasicContext extends ScriptContext {
         @Override
         public int call() {
 
-            Context ctx = (Context) Context.currentContext();
+            BasicContext ctx = (BasicContext) Context.currentContext();
 
             ctx.pushThis();
 
