@@ -37,7 +37,7 @@ public class Heapptr  {
             ctx.post(new Runnable() {
                 @Override
                 public void run() {
-                    BasicContext ctx = (Context) ScriptContext.currentContext();
+                    BasicContext ctx = (BasicContext) ScriptContext.currentContext();
                     ctx.pushGlobalObject();
                     ctx.push(_key);
                     ctx.delProp(-2);
