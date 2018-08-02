@@ -668,4 +668,3 @@ static duk_ret_t Java_cn_kkmofang_duktape_BasicContext_Function_func(duk_context
 
     return ret;
 }
-
