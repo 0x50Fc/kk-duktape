@@ -6,15 +6,13 @@
 //  Copyright © 2018年 kkmofang.cn. All rights reserved.
 //
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
-    
+#ifndef KKDUKTAPE_H
+#define KKDUKTAPE_H
+
+ 
 #include <KKDuktape/duk_config.h>
 #include <KKDuktape/duktape.h>
 
-#ifdef  __cplusplus
-}
-#endif
 
+#endif
 
