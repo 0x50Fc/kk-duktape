@@ -22,6 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1A7CBC87211ADD32006DC0A3 /* duk_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFD6C082112A8B50038234E /* duk_config.h */; };
+		1A7CBC88211ADD32006DC0A3 /* duktape.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFD6C0A2112A8B50038234E /* duktape.c */; };
+		1A7CBC89211ADD32006DC0A3 /* duktape.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFD6C092112A8B50038234E /* duktape.h */; };
 		1AFD6C022112A8660038234E /* KKDuktape.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFD6C002112A8660038234E /* KKDuktape.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AFD6C0B2112A8B50038234E /* duk_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFD6C082112A8B50038234E /* duk_config.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1AFD6C0C2112A8B50038234E /* duktape.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFD6C092112A8B50038234E /* duktape.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -39,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A7CBC7C211ADD25006DC0A3 /* libKKDuktape.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKKDuktape.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AFD6BFD2112A8660038234E /* KKDuktape.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KKDuktape.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AFD6C002112A8660038234E /* KKDuktape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KKDuktape.h; sourceTree = "<group>"; };
 		1AFD6C012112A8660038234E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -48,6 +52,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1A7CBC79211ADD25006DC0A3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1AFD6BF92112A8660038234E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -70,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				1AFD6BFD2112A8660038234E /* KKDuktape.framework */,
+				1A7CBC7C211ADD25006DC0A3 /* libKKDuktape.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,6 +101,15 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		1A7CBC7A211ADD25006DC0A3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A7CBC87211ADD32006DC0A3 /* duk_config.h in Headers */,
+				1A7CBC89211ADD32006DC0A3 /* duktape.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1AFD6BFA2112A8660038234E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -102,6 +123,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1A7CBC7B211ADD25006DC0A3 /* KKDuktapeStaticLibrary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A7CBC86211ADD25006DC0A3 /* Build configuration list for PBXNativeTarget "KKDuktapeStaticLibrary" */;
+			buildPhases = (
+				1A7CBC78211ADD25006DC0A3 /* Sources */,
+				1A7CBC79211ADD25006DC0A3 /* Frameworks */,
+				1A7CBC7A211ADD25006DC0A3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KKDuktapeStaticLibrary;
+			productName = KKDuktapeStaticLibrary;
+			productReference = 1A7CBC7C211ADD25006DC0A3 /* libKKDuktape.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		1AFD6BFC2112A8660038234E /* KKDuktape */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AFD6C052112A8660038234E /* Build configuration list for PBXNativeTarget "KKDuktape" */;
@@ -129,6 +167,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = kkmofang.cn;
 				TargetAttributes = {
+					1A7CBC7B211ADD25006DC0A3 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					1AFD6BFC2112A8660038234E = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -151,6 +192,7 @@
 			targets = (
 				1AFD6BFC2112A8660038234E /* KKDuktape */,
 				1AFD6C0E2112A9210038234E /* KKDuktape.framework */,
+				1A7CBC7B211ADD25006DC0A3 /* KKDuktapeStaticLibrary */,
 			);
 		};
 /* End PBXProject section */
@@ -182,6 +224,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1A7CBC78211ADD25006DC0A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A7CBC88211ADD32006DC0A3 /* duktape.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1AFD6BF82112A8660038234E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -201,6 +251,38 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1A7CBC84211ADD25006DC0A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8V7A9F9SCJ;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = KKDuktape;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		1A7CBC85211ADD25006DC0A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8V7A9F9SCJ;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = KKDuktape;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		1AFD6C032112A8660038234E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -395,6 +477,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1A7CBC86211ADD25006DC0A3 /* Build configuration list for PBXNativeTarget "KKDuktapeStaticLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A7CBC84211ADD25006DC0A3 /* Debug */,
+				1A7CBC85211ADD25006DC0A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1AFD6BF72112A8660038234E /* Build configuration list for PBXProject "KKDuktape" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
