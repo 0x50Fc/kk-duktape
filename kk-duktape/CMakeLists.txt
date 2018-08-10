@@ -12,3 +12,4 @@ add_library(kk-duktape
             src/main/jni/kk.c)
 
 target_link_libraries(kk-duktape duktape log)
+
