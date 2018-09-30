@@ -168,7 +168,11 @@
  * DUK_VERSION is defined before including so that configuration
  * snippets can react to it.
  */
+#ifdef DEBUG
+#include "duk_config_debug.h"
+#else
 #include "duk_config.h"
+#endif
 
 /*
  *  Avoid C++ name mangling

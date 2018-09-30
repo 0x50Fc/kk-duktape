@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1A0111C62160A2E3002E4182 /* duk_config_debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0111C52160A2E3002E4182 /* duk_config_debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1A7A4635215DE4D5000A6145 /* KKDuktape.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A4634215DE4D5000A6145 /* KKDuktape.m */; };
 		1A7CBC87211ADD32006DC0A3 /* duk_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFD6C082112A8B50038234E /* duk_config.h */; };
 		1A7CBC88211ADD32006DC0A3 /* duktape.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFD6C0A2112A8B50038234E /* duktape.c */; };
 		1A7CBC89211ADD32006DC0A3 /* duktape.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AFD6C092112A8B50038234E /* duktape.h */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A0111C52160A2E3002E4182 /* duk_config_debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = duk_config_debug.h; path = ../../lib/duktape/src/duk_config_debug.h; sourceTree = "<group>"; };
+		1A7A4634215DE4D5000A6145 /* KKDuktape.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KKDuktape.m; sourceTree = "<group>"; };
 		1A7CBC7C211ADD25006DC0A3 /* libKKDuktape.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKKDuktape.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AFD6BFD2112A8660038234E /* KKDuktape.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KKDuktape.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AFD6C002112A8660038234E /* KKDuktape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KKDuktape.h; sourceTree = "<group>"; };
@@ -89,10 +93,12 @@
 		1AFD6BFF2112A8660038234E /* KKDuktape */ = {
 			isa = PBXGroup;
 			children = (
+				1A0111C52160A2E3002E4182 /* duk_config_debug.h */,
 				1AFD6C082112A8B50038234E /* duk_config.h */,
 				1AFD6C0A2112A8B50038234E /* duktape.c */,
 				1AFD6C092112A8B50038234E /* duktape.h */,
 				1AFD6C002112A8660038234E /* KKDuktape.h */,
+				1A7A4634215DE4D5000A6145 /* KKDuktape.m */,
 				1AFD6C012112A8660038234E /* Info.plist */,
 			);
 			path = KKDuktape;
@@ -117,6 +123,7 @@
 				1AFD6C022112A8660038234E /* KKDuktape.h in Headers */,
 				1AFD6C0C2112A8B50038234E /* duktape.h in Headers */,
 				1AFD6C0B2112A8B50038234E /* duk_config.h in Headers */,
+				1A0111C62160A2E3002E4182 /* duk_config_debug.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A7A4635215DE4D5000A6145 /* KKDuktape.m in Sources */,
 				1AFD6C0D2112A8B50038234E /* duktape.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
