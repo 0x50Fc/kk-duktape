@@ -169,7 +169,7 @@
  * snippets can react to it.
  */
 #ifdef DEBUG
-#include "duk_config_debug.h"
+#include "duk_config.h"
 #else
 #include "duk_config.h"
 #endif
