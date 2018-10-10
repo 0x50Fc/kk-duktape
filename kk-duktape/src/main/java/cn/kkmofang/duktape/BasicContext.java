@@ -136,9 +136,6 @@ public abstract class BasicContext extends ScriptContext {
     }
 
     public void pushHeapptr(long heapptr) {
-        if(heapptr == 0xffffffffffffffffl) {
-            System.out.println();
-        }
         push_heapptr(_ptr,heapptr);
     }
 
