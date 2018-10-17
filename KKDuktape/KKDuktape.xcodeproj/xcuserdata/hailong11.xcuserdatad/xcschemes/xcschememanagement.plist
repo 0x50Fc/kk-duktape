@@ -7,7 +7,7 @@
 		<key>KKDuktape.framework.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>16</integer>
+			<integer>14</integer>
 		</dict>
 		<key>KKDuktape.xcscheme</key>
 		<dict>
@@ -17,7 +17,7 @@
 		<key>KKDuktapeStaticLibrary.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>19</integer>
+			<integer>15</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
